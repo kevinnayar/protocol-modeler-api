@@ -48,6 +48,11 @@ export class AuthGuard implements CanActivate {
       }
 
       const user: UserEntity = getUserFromDecodedJwt(userMaybe);
+
+      if (!this.canUserAccessTenant(request, user)) {
+        throw new UnauthorizedException();
+      }
+
       request.user = user;
     } catch {
       throw new UnauthorizedException();
@@ -62,5 +67,13 @@ export class AuthGuard implements CanActivate {
 
   private formatPublicKey(key: string): string {
     return `-----BEGIN PUBLIC KEY-----\n${key}\n-----END PUBLIC KEY-----`;
+  }
+
+  private canUserAccessTenant(request: Request, user: UserEntity): boolean {
+    const mismatchViaParams =
+      'tenantId' in request.params && request.params.tenantId !== user.tenantId;
+    const mismatchViaBody =
+      'tenantId' in request.body && request.body.tenantId !== user.tenantId;
+    return !(mismatchViaParams || mismatchViaBody);
   }
 }
