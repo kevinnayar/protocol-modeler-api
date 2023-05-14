@@ -19,10 +19,10 @@ export class StudiesController {
   constructor(private readonly studiesService: StudiesService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe<ProtocolEntity>(ProtocolSchema))
   create(
     @Param('tenantId') tenantId: string,
-    @Body() protocol: ProtocolEntity,
+    @Body(new ZodValidationPipe<ProtocolEntity>(ProtocolSchema))
+    protocol: ProtocolEntity,
   ) {
     return this.studiesService.create(tenantId, protocol);
   }

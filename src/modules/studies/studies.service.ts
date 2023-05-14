@@ -11,7 +11,7 @@ export class StudiesService {
       protocol.uuid = getUuid();
     }
 
-    if (!this.store[tenantId]) {
+    if (this.store[tenantId]) {
       this.store[tenantId][protocol.uuid] = protocol;
     } else {
       this.store[tenantId] = {

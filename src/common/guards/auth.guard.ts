@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { UserEntity } from '../../common/types/user.types';
-import { getUserFromDecodedJWT } from '../../common/utils/formatting.utils';
+import { getUserFromDecodedJwt } from '../../common/utils/formatting.utils';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException();
       }
 
-      const user: UserEntity = getUserFromDecodedJWT(userMaybe);
+      const user: UserEntity = getUserFromDecodedJwt(userMaybe);
       request.user = user;
     } catch {
       throw new UnauthorizedException();
@@ -57,7 +57,7 @@ export class AuthGuard implements CanActivate {
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    return type === 'Bearer' && token ? token : undefined;
   }
 
   private formatPublicKey(key: string): string {

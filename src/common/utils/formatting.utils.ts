@@ -1,11 +1,6 @@
-import { UserEntity } from '../types/user.types';
+import { UserEntity, UserRoles } from '../types/user.types';
 
-type UserRoles = {
-  realm: string[];
-  resource: string[];
-};
-
-export function getUserFromDecodedJWT(decoded: any): UserEntity {
+export function getUserFromDecodedJwt(decoded: any): UserEntity {
   let tenantId = '';
   if ('iss' in decoded && typeof decoded.iss === 'string') {
     const split = decoded.iss.split('/');
