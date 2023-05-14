@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { StudiesService } from './studies.service';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ProtocolSchema, ProtocolEntity } from 'src/common/types/study.types';
