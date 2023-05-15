@@ -5,15 +5,7 @@ export const RolesForRealm = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest() as { user: UserEntity };
     const { roles }: { roles: UserRoles } = request.user;
-    return roles.realm || [];
-  },
-);
-
-export const IsAdminRole = createParamDecorator(
-  (_data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest() as { user: UserEntity };
-    const { roles }: { roles: UserRoles } = request.user;
-    return roles.realm.includes('admin');
+    return roles?.realm || [];
   },
 );
 
@@ -21,6 +13,6 @@ export const RolesForResource = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest() as { user: UserEntity };
     const { roles }: { roles: UserRoles } = request.user;
-    return roles.resource || [];
+    return roles?.resource || [];
   },
 );

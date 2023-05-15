@@ -5,10 +5,10 @@ import {
   Body,
   Param,
   Delete,
-  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { Public } from '../../common/decorators/public.decorator';
-import { IsAdminRole } from 'src/common/decorators/roles.decorator';
+import { IsAdminGuard } from 'src/common/guards/admin.guard';
 import { StudiesService } from './studies.service';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -39,14 +39,8 @@ export class StudiesController {
   }
 
   @Delete()
-  removeAll(
-    @Param('tenantId') tenantId: string,
-    @IsAdminRole() isAdmin: boolean,
-  ) {
-    if (!isAdmin) {
-      throw new UnauthorizedException();
-    }
-
+  @UseGuards(IsAdminGuard)
+  removeAll(@Param('tenantId') tenantId: string) {
     return this.studiesService.removeAll(tenantId);
   }
 
