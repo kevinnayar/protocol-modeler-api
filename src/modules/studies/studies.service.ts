@@ -26,6 +26,10 @@ export class StudiesService {
     return this.store[tenantId] ? Object.values(this.store[tenantId]) : [];
   }
 
+  removeAll(tenantId: string) {
+    delete this.store[tenantId];
+  }
+
   findOne(tenantId: string, studyId: string) {
     return this.store[tenantId] ? this.store[tenantId][studyId] : undefined;
   }

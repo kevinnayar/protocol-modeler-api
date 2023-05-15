@@ -1,5 +1,14 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Public } from '../../common/decorators/public.decorator';
+import { IsAdminRole } from 'src/common/decorators/roles.decorator';
 import { StudiesService } from './studies.service';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -27,6 +36,18 @@ export class StudiesController {
   @Get()
   findAll(@Param('tenantId') tenantId: string) {
     return this.studiesService.findAll(tenantId);
+  }
+
+  @Delete()
+  removeAll(
+    @Param('tenantId') tenantId: string,
+    @IsAdminRole() isAdmin: boolean,
+  ) {
+    if (!isAdmin) {
+      throw new UnauthorizedException();
+    }
+
+    return this.studiesService.removeAll(tenantId);
   }
 
   @Get(':studyId')
