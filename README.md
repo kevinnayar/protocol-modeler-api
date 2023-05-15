@@ -4,8 +4,6 @@
 
 # Protocol Modeler API
 
-A progressive [Node.js](http://nodejs.org) framework for building efficient and scalable server-side applications.
-
 ## Installation
 
 ```bash
