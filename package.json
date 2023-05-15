@@ -26,6 +26,7 @@
     "@nestjs/jwt": "^10.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.3.0",
+    "@supabase/supabase-js": "^2.21.0",
     "jsonwebtoken": "^9.0.0",
     "keycloak-connect": "^21.1.1",
     "nest-keycloak-connect": "^1.9.1",
