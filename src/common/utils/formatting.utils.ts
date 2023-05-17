@@ -1,4 +1,5 @@
 import { UserEntity, UserRoles } from '../types/user.types';
+import { ZodError } from 'zod';
 
 export function getUserFromDecodedJwt(decoded: any): UserEntity {
   let tenantId = '';
@@ -41,4 +42,10 @@ export function getUserFromDecodedJwt(decoded: any): UserEntity {
   };
 
   return user;
+}
+
+export function getZodErrors(errors: ZodError): string {
+  return errors.errors
+    .map((error) => `${error.message} for "${error.path.join(', ')}"`)
+    .join('\n');
 }

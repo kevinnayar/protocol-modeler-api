@@ -18,10 +18,32 @@ function getRoles(
   }
 }
 
-export const RolesForRealm = createParamDecorator(
-  (_d: unknown, ctx: ExecutionContext) => getRoles(ctx, 'realm'),
-);
+export const RolesForRealm = createParamDecorator<
+  undefined,
+  ExecutionContext,
+  string[]
+>((_data: undefined, ctx: ExecutionContext) => getRoles(ctx, 'realm'));
 
-export const RolesForResource = createParamDecorator(
-  (_d: unknown, ctx: ExecutionContext) => getRoles(ctx, 'resource'),
-);
+export const IsRealmRole = createParamDecorator<
+  string,
+  ExecutionContext,
+  boolean
+>((data: string, ctx: ExecutionContext) => {
+  const roles = getRoles(ctx, 'realm');
+  return roles.includes(data);
+});
+
+export const RolesForResource = createParamDecorator<
+  undefined,
+  ExecutionContext,
+  string[]
+>((_data: undefined, ctx: ExecutionContext) => getRoles(ctx, 'resource'));
+
+export const IsResourceRole = createParamDecorator<
+  string,
+  ExecutionContext,
+  boolean
+>((data: string, ctx: ExecutionContext) => {
+  const roles = getRoles(ctx, 'resource');
+  return roles.includes(data);
+});

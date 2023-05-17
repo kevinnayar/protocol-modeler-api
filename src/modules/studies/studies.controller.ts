@@ -25,6 +25,7 @@ export class StudiesController {
   ) {}
 
   @Post()
+  @Public()
   create(
     @Param('tenantId') tenantId: string,
     @Body(new ZodValidationPipe<ProtocolEntity>(ProtocolSchema))
